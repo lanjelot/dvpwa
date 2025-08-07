@@ -15,7 +15,8 @@ class Student(NamedTuple):
     async def get(conn: Connection, id_: int):
         async with conn.cursor() as cur:
             await cur.execute(
-                'SELECT id, name FROM students WHERE id = {id_}',
+                'SELECT id, name FROM students WHERE id = %s',
+                (id_,)
             )
             r = await cur.fetchone()
             return Student.from_raw(r)
