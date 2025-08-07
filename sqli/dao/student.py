@@ -45,3 +45,9 @@ class Student(NamedTuple):
             await cur.execute(q)
 
 
+    @staticmethod
+    async def update(conn: Connection, name: str, id_: int):
+        q = f"UPDATE students (name) SET name = '{name}' WHERE id_ = %s"
+        params = {'id': id_}
+        async with conn.cursor() as cur:
+            await cur.execute(q, params)
